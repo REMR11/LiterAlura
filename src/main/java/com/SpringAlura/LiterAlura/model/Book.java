@@ -29,7 +29,7 @@ public class Book {
 				@JoinColumn(name = "book_id"), 
 			inverseJoinColumns = 
 				@JoinColumn(name = "author_id"))
-	private List<Author> Authors;
+	private List<Author> authors;
 	@ManyToMany
 	@JoinTable(
 			name = "book_translator", 
@@ -80,9 +80,9 @@ public class Book {
 			builder.append(title);
 			builder.append(", ");
 		}
-		if (Authors != null) {
+		if (authors != null) {
 			builder.append("Authors=");
-			builder.append(Authors);
+			builder.append(authors);
 			builder.append(", ");
 		}
 		if (translators != null) {
@@ -155,14 +155,14 @@ public class Book {
 	 * @return the authors
 	 */
 	public List<Author> getAuthors() {
-		return Authors;
+		return authors;
 	}
 
 	/**
 	 * @param authors the authors to set
 	 */
 	public void setAuthors(List<Author> authors) {
-		Authors = authors;
+		this.authors = authors;
 	}
 
 	/**
