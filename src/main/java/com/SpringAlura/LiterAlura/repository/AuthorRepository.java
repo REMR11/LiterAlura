@@ -10,5 +10,5 @@ import com.SpringAlura.LiterAlura.model.Author;
 @Service
 public interface AuthorRepository extends JpaRepository<Author, Long>{
 	List<Author> findByNameContainingIgnoreCase(String pAuthorName);
-	List<Author> findByYirthYear(Integer pbirthYear);
+	List<Author> findByBirthYear(Integer pbirthYear);
 }

@@ -8,5 +8,5 @@ import com.SpringAlura.LiterAlura.model.Translator;
 
 public interface TranslatorRepository extends JpaRepository<Translator, Long> {
 	List<Translator> findByNameContainingIgnoreCase(String pAuthorName);
-	List<Translator> findByYirthYear(Integer pbirthYear);
+	List<Translator> findByBirthYear(Integer pbirthYear);
 }
