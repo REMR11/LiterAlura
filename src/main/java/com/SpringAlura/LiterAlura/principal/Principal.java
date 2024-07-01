@@ -3,6 +3,7 @@ package com.SpringAlura.LiterAlura.principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import com.SpringAlura.LiterAlura.model.ApiData;
 import com.SpringAlura.LiterAlura.model.Author;
@@ -46,7 +47,7 @@ public class Principal {
 		var opcion = -1;
 		while (opcion != 0) {
 			var menu = """
-					1 - Buscar series
+					1 - Buscar libro
 					2 - Buscar episodios
 					3 - Mostrar series buscadas
 					4 - Buscar series por titulo
@@ -75,12 +76,42 @@ public class Principal {
 		}
 	}
 
-	private void searchBookByTitle() {
+	private ApiData getData() {
 		System.out.println("Escribe el nombre del libro que deseas buscar: ");
         String tituloLibro = sc.nextLine();
         String json = consumeApi.obtenerDatos(URL_BASE + "?search=" + tituloLibro.replace(" ", "+").toLowerCase());
         System.out.println(json);
         
+        ApiData datos  = convertData.getData(json, ApiData.class);
         
+        System.out.println(datos);
+        return datos;
+	}
+	private void searchBookByTitle() {
+		ApiData apidata = getData();
+		
+		bookDatas = apidata.results().stream()
+				.map(b -> new BookData(
+						b.title(), 
+						b.Authors(), 
+						b.translators(), 
+						b.subjects(), 
+						b.bookshelves(), 
+						b.Languages(), 
+						b.copyright(), 
+						b.mediaType(), 
+						b.downloadCount()))
+				.collect(Collectors.toList());
+		bookDatas.forEach(System.out::println);
+		
+		authorDatas = bookDatas.stream()
+				.flatMap(b -> b.Authors().stream()
+						.map(a -> new AuthorsData(
+								a.name(), 
+								a.birthYear(), 
+								a.deathYear())))
+				.collect(Collectors.toList());
+		
+		authorDatas.forEach(System.out::println);
 	}
 }
