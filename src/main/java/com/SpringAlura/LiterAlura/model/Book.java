@@ -1,18 +1,23 @@
 package com.SpringAlura.LiterAlura.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,36 +27,31 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String title;
-	@ManyToMany
-	@JoinTable(
-			name = "book_author", 
-			joinColumns = 
-				@JoinColumn(name = "book_id"), 
-			inverseJoinColumns = 
-				@JoinColumn(name = "author_id"))
+
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Author> authors;
-	@ManyToMany
-	@JoinTable(
-			name = "book_translator", 
-			joinColumns = 
-				@JoinColumn(name = "book_id"), 
-			inverseJoinColumns = 
-				@JoinColumn(name = "translator_id"))
-	private List<Translator> translators;
-	@ElementCollection
-	@CollectionTable(
-			name = "book_subject", 
-			joinColumns = 
-				@JoinColumn(name = "book_id"))
-	private List<String> subjects;
-	@ElementCollection
-	@CollectionTable(
-			name = "book_bookshelves", 
-			joinColumns = 
-				@JoinColumn(name = "book_id"))
-	private List<String> bookshelves;
-	 @Enumerated(EnumType.STRING)
-	private List<Language> Languages;
+//	@ManyToMany
+//	@JoinTable(
+//			name = "book_translator", 
+//			joinColumns = 
+//				@JoinColumn(name = "book_id"), 
+//			inverseJoinColumns = 
+//				@JoinColumn(name = "translator_id"))
+//	private List<Translator> translators;
+//	@ElementCollection
+//	@CollectionTable(
+//			name = "book_subject", 
+//			joinColumns = 
+//				@JoinColumn(name = "book_id"))
+//	private List<String> subjects;
+//	@ElementCollection
+//	@CollectionTable(
+//			name = "book_bookshelves", 
+//			joinColumns = 
+//				@JoinColumn(name = "book_id"))
+//	private List<String> bookshelves;
+	@Enumerated(EnumType.STRING)
+	private Language Language;
 	private Boolean copyright;
 	private String mediaType;
 	private Integer downloadCount;
@@ -61,12 +61,12 @@ public class Book {
 
 	public Book(BookData pBookData) {
 		this.title = pBookData.title();
-		this.subjects = pBookData.subjects();
-		this.bookshelves = pBookData.bookshelves();
-		this.Languages = Language.fromString(pBookData.Languages());
+//		this.subjects = pBookData.subjects();
+//		this.bookshelves = pBookData.bookshelves();
+		this.Language = Language.fromString(pBookData.Languages().stream().limit(1).collect(Collectors.joining()));
 		this.copyright = pBookData.copyright();
 		this.mediaType = pBookData.mediaType();
-		this.downloadCount =pBookData.downloadCount();
+		this.downloadCount = pBookData.downloadCount();
 	}
 
 	@Override
@@ -81,28 +81,24 @@ public class Book {
 			builder.append(", ");
 		}
 		if (authors != null) {
-			builder.append("Authors=");
+			builder.append("Author=");
 			builder.append(authors);
 			builder.append(", ");
 		}
-		if (translators != null) {
-			builder.append("translators=");
-			builder.append(translators);
-			builder.append(", ");
-		}
-		if (subjects != null) {
-			builder.append("subjects=");
-			builder.append(subjects);
-			builder.append(", ");
-		}
-		if (bookshelves != null) {
-			builder.append("bookshelves=");
-			builder.append(bookshelves);
-			builder.append(", ");
-		}
-		if (Languages != null) {
+
+//		if (subjects != null) {
+//			builder.append("subjects=");
+//			builder.append(subjects);
+//			builder.append(", ");
+//		}
+//		if (bookshelves != null) {
+//			builder.append("bookshelves=");
+//			builder.append(bookshelves);
+//			builder.append(", ");
+//		}
+		if (Language != null) {
 			builder.append("Languages=");
-			builder.append(Languages);
+			builder.append(Language);
 			builder.append(", ");
 		}
 		if (copyright != null) {
@@ -151,74 +147,77 @@ public class Book {
 		this.title = title;
 	}
 
-	/**
-	 * @return the authors
-	 */
-	public List<Author> getAuthors() {
-		return authors;
-	}
 
-	/**
-	 * @param authors the authors to set
-	 */
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-	}
+//	/**
+//	 * @return the translators
+//	 */
+//	public List<Translator> getTranslators() {
+//		return translators;
+//	}
+//
+//	/**
+//	 * @param translators the translators to set
+//	 */
+//	public void setTranslators(List<Translator> translators) {
+//		this.translators = translators;
+//	}
+//
+//	/**
+//	 * @return the subjects
+//	 */
+//	public List<String> getSubjects() {
+//		return subjects;
+//	}
+//
+//	/**
+//	 * @param subjects the subjects to set
+//	 */
+//	public void setSubjects(List<String> subjects) {
+//		this.subjects = subjects;
+//	}
+//
+//	/**
+//	 * @return the bookshelves
+//	 */
+//	public List<String> getBookshelves() {
+//		return bookshelves;
+//	}
+//
+//	/**
+//	 * @param bookshelves the bookshelves to set
+//	 */
+//	public void setBookshelves(List<String> bookshelves) {
+//		this.bookshelves = bookshelves;
+//	}
 
-	/**
-	 * @return the translators
-	 */
-	public List<Translator> getTranslators() {
-		return translators;
-	}
 
-	/**
-	 * @param translators the translators to set
-	 */
-	public void setTranslators(List<Translator> translators) {
-		this.translators = translators;
-	}
-
-	/**
-	 * @return the subjects
-	 */
-	public List<String> getSubjects() {
-		return subjects;
-	}
-
-	/**
-	 * @param subjects the subjects to set
-	 */
-	public void setSubjects(List<String> subjects) {
-		this.subjects = subjects;
-	}
-
-	/**
-	 * @return the bookshelves
-	 */
-	public List<String> getBookshelves() {
-		return bookshelves;
-	}
-
-	/**
-	 * @param bookshelves the bookshelves to set
-	 */
-	public void setBookshelves(List<String> bookshelves) {
-		this.bookshelves = bookshelves;
-	}
 
 	/**
 	 * @return the languages
 	 */
-	public List<Language> getLanguages() {
-		return Languages;
+	public Language getLanguage() {
+		return Language;
+	}
+
+	/**
+	 * @return the author
+	 */
+	public List<Author> getAuthor() {
+		return authors;
+	}
+
+	/**
+	 * @param author the author to set
+	 */
+	public void setAuthor(List<Author> author) {
+		this.authors = author;
 	}
 
 	/**
 	 * @param languages the languages to set
 	 */
-	public void setLanguages(List<Language> languages) {
-		Languages = languages;
+	public void setLanguage(Language languages) {
+		Language = languages;
 	}
 
 	/**
@@ -262,7 +261,5 @@ public class Book {
 	public void setDownloadCount(Integer downloadCount) {
 		this.downloadCount = downloadCount;
 	}
-	
-	
-	
+
 }

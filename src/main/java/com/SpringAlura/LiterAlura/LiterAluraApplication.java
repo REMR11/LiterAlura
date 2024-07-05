@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.SpringAlura.LiterAlura.principal.Principal;
 import com.SpringAlura.LiterAlura.repository.AuthorRepository;
 import com.SpringAlura.LiterAlura.repository.BookRepository;
-import com.SpringAlura.LiterAlura.repository.TranslatorRepository;
+
 
 @SpringBootApplication
 public  class LiterAluraApplication implements CommandLineRunner{
@@ -18,8 +18,7 @@ public  class LiterAluraApplication implements CommandLineRunner{
 	@Autowired
 	private AuthorRepository authorRepository;
 	
-	@Autowired
-	private TranslatorRepository translatorRepository;
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(LiterAluraApplication.class, args);
@@ -27,7 +26,7 @@ public  class LiterAluraApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repository, authorRepository, translatorRepository);
+		Principal principal = new Principal(repository, authorRepository);
 		principal.muestraElMenu();
 		
 	}

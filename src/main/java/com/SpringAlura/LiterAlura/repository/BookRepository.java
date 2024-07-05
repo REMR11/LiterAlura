@@ -1,19 +1,30 @@
 package com.SpringAlura.LiterAlura.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Service;
 
 import com.SpringAlura.LiterAlura.model.Book;
 import com.SpringAlura.LiterAlura.model.Language;
 
-
-public interface BookRepository extends JpaRepository<Book, Long>{
+public interface BookRepository extends JpaRepository<Book, Long> {
 //	Optional<Book> findByTitleContainingIgnoreCase(String NameBook);
-//    List<Book> findByLanguages(Language language);
-//	@Query("select b from Book b WHERE b.totalTemporadas <= :totalTemporadas AND s.evaluacion >= :evaluacion")
-//    List<Book> seriesPorTemporadaYEvaluacion(int totalTemporadas, double evaluacion);
+//	@Query("SELECT b FROM book b WHERE b.Language = :language")
+//	List<Book> findByLanguages(Language language);
+	
+//	@Query("SELECT b FROM Book b WHERE b.language = :language")
+//	List<Book> findAllByLanguage(Language language);
+
+//	List<Book> findTop5ByOrderByDownloadCountDesc();
+//
+//	@Query("SELECT l FROM book a JOIN a.authors l")
+//	List<Author> showAuthors();
+//
+//	@Query("SELECT l FROM Book a JOIN a.authors l WHERE l.birthYear <= :year AND l.deathYear >= :year")
+//	List<Author> showAuthorAlive (String year);
+//	@Query("SELECT l FROM Book a JOIN a.authors l WHERE l.birthYear <= :year AND l.deathYear >= :year")
+//	List<Author> showAuthorsAlive (@Param("year") int year);
+	
+	
 }

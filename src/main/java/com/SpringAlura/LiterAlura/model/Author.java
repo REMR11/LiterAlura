@@ -2,12 +2,15 @@ package com.SpringAlura.LiterAlura.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,8 +24,8 @@ public class Author {
 	private Integer birthYear;
 	private Integer deathYear;
 
-	@ManyToMany(mappedBy = "authors")
-    private List<Book> books;
+	@ManyToOne
+    private Book book;
 	
 	public Author() {
 		
@@ -59,9 +62,9 @@ public class Author {
 			builder.append(deathYear);
 			builder.append(", ");
 		}
-		if (books != null) {
+		if (book != null) {
 			builder.append("books=");
-			builder.append(books);
+			builder.append(book);
 		}
 		builder.append("]");
 		return builder.toString();
@@ -124,19 +127,18 @@ public class Author {
 	}
 
 	/**
-	 * @return the books
+	 * @return the book
 	 */
-	public List<Book> getBooks() {
-		return books;
+	public Book getBook() {
+		return book;
 	}
 
 	/**
-	 * @param books the books to set
+	 * @param book the book to set
 	 */
-	public void setBooks(List<Book> books) {
-		this.books = books;
+	public void setBook(Book book) {
+		this.book = book;
 	}
-	
-	
+
 	
 }
