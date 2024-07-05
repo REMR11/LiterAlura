@@ -50,15 +50,11 @@ public class Principal {
 		var opcion = -1;
 		while (opcion != 0) {
 			var menu = """
-					1 - Buscar libro
-					2 - Mostrar libros buscadps
-					3 - Mostrar series buscadas
-					4 - Buscar series por titulo
-					5 - Top 5 mejores series
-					6 - Buscar Series por categoría
-					7 - filtrar series por temporadas y evaluación
-					8 - Buscar episodios por titulo
-					9 - Top 5 episodios por Serie
+					1 -> Buscar Libro
+                    2 -> Listar Libros Registrados
+                    3 -> Listar Autores Registrados
+                    4 -> Listar Autores Vivos En Un Determinado Año
+                    5 -> Listar Libros por idioma
 
 					0 - Salir
 					""";
